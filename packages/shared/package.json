@@ -1,0 +1,14 @@
+{
+  "name": "@eduledger/shared",
+  "version": "1.0.0",
+  "description": "Types and contracts shared between the API and web apps",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

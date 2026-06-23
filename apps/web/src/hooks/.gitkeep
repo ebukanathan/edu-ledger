@@ -1,0 +1,2 @@
+# Cross-feature React hooks (e.g. useDebounce, useMediaQuery) go here.
+# Feature-specific hooks belong in features/<name>/hooks.ts.
