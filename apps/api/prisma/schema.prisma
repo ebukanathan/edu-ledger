@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  
+}
+
+model School {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  users     User[]
+  students  Student[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Student {
+  id          String   @id @default(uuid())
+  firstName   String
+  lastName    String
+  studentNo   String   @unique
+
+  schoolId    String
+  school      School   @relation(fields: [schoolId], references: [id])
+
+  fees        StudentFee[]
+  payments    Payment[]
+
+  createdAt   DateTime @default(now())
+}
+
+model FeeStructure {
+  id          String   @id @default(uuid())
+  title       String
+  amount      Decimal
+
+  studentFees StudentFee[]
+
+  createdAt   DateTime @default(now())
+}
+
+model StudentFee {
+  id              String @id @default(uuid())
+
+  studentId       String
+  feeStructureId  String
+
+  assignedAmount  Decimal
+
+  student         Student      @relation(fields: [studentId], references: [id])
+  feeStructure    FeeStructure @relation(fields: [feeStructureId], references: [id])
+}
+
+model Payment {
+  id            String   @id @default(uuid())
+
+  studentId     String
+  amount        Decimal
+
+  reference     String   @unique
+
+  student       Student @relation(fields: [studentId], references: [id])
+
+  createdAt     DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  ACCOUNTANT
+}
