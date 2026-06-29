@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/stores/auth-store';
-import { authApi } from './api';
-import type { LoginInput, RegisterInput } from './schemas';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/auth-store";
+import { authApi } from "./api";
+import type { LoginInput, RegisterInput } from "./schemas";
 
 export const authKeys = {
-  me: ['auth', 'me'] as const,
+  me: ["auth", "me"] as const,
 };
 
 /** Authoritative current-user query, gated on having a token. */
@@ -27,7 +27,7 @@ export function useLogin() {
     mutationFn: (input: LoginInput) => authApi.login(input),
     onSuccess: ({ token, user }) => {
       setSession(token, user);
-      router.push('/dashboard');
+      router.push("/dashboard");
     },
   });
 }
@@ -40,7 +40,20 @@ export function useRegister() {
       authApi.register(input),
     onSuccess: ({ token, user }) => {
       setSession(token, user);
-      router.push('/dashboard');
+      router.push("/dashboard");
+    },
+  });
+}
+
+export function useSchoolRegister() {
+  const router = useRouter();
+  const setSession = useAuthStore((s) => s.setSession);
+  return useMutation({
+    mutationFn: (input: { name: string; email: string }) =>
+      authApi.schoolRegister(input),
+    onSuccess: ({ token, user }) => {
+      setSession(token, user);
+      router.push("/dashboard");
     },
   });
 }
@@ -54,7 +67,7 @@ export function useLogout() {
     onSettled: () => {
       clear();
       queryClient.clear();
-      router.push('/login');
+      router.push("/login");
     },
   });
 }

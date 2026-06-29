@@ -3,15 +3,15 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schoolRegisterSchema, type SchoolRegisterInput } from "../schemas";
-import { useLogin } from "../hooks";
+import { useLogin, useSchoolRegister } from "../hooks";
 
 /**
- * Login form — react-hook-form + zod validation, submits via the `useLogin`
+ * School registration form — react-hook-form + zod validation, submits via the `useSchoolRegister`
  * mutation. Replace the raw inputs with shadcn/ui <Form>/<Input>/<Button>
  * once those components are generated (`npx shadcn@latest add form input button`).
  */
 export function SchoolRegisterForm() {
-  const login = useLogin();
+  const schoolRegister = useSchoolRegister();
   const {
     register,
     handleSubmit,
@@ -20,7 +20,7 @@ export function SchoolRegisterForm() {
     resolver: zodResolver(schoolRegisterSchema),
   });
 
-  const onSubmit = handleSubmit((values) => login.mutate(values));
+  const onSubmit = handleSubmit((values) => schoolRegister.mutate(values));
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
@@ -55,18 +55,19 @@ export function SchoolRegisterForm() {
         )}
       </div>
 
-      {login.isError && (
+      {schoolRegister.isError && (
         <p className="text-sm text-destructive">
-          {(login.error as { message?: string })?.message ?? "Login failed"}
+          {(schoolRegister.error as { message?: string })?.message ??
+            "Registration failed"}
         </p>
       )}
 
       <button
         type="submit"
-        disabled={isSubmitting || login.isPending}
+        disabled={isSubmitting || schoolRegister.isPending}
         className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
       >
-        {login.isPending ? "Signing in…" : "Sign in"}
+        {schoolRegister.isPending ? "Signing up…" : "Sign up"}
       </button>
     </form>
   );
