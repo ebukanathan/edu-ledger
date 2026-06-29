@@ -1,6 +1,6 @@
-import axios, { type AxiosError } from 'axios';
-import { env } from '@/config/env';
-import { useAuthStore } from '@/stores/auth-store';
+import axios, { type AxiosError } from "axios";
+import { env } from "@/config/env";
+import { useAuthStore } from "@/stores/auth-store";
 
 /**
  * Shared axios instance for talking to the EduLedger backend (`/api`).
@@ -11,7 +11,7 @@ import { useAuthStore } from '@/stores/auth-store';
  */
 export const apiClient = axios.create({
   baseURL: env.apiUrl,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { "Content-Type": "application/json" },
 });
 
 apiClient.interceptors.request.use((config) => {
@@ -31,7 +31,9 @@ export interface ApiError {
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<{ message?: string; code?: string; details?: unknown }>) => {
+  (
+    error: AxiosError<{ message?: string; code?: string; details?: unknown }>,
+  ) => {
     // 401 → session is dead; clear it so guards redirect to login.
     if (error.response?.status === 401) {
       useAuthStore.getState().clear();
@@ -42,7 +44,7 @@ apiClient.interceptors.response.use(
       message:
         error.response?.data?.message ??
         error.message ??
-        'Something went wrong. Please try again.',
+        "Something went wrong. Please try again.",
       code: error.response?.data?.code,
       details: error.response?.data?.details,
     };
