@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/auth-store";
 import { authApi } from "./api";
-import type { LoginInput, RegisterInput } from "./schemas";
+import type { LoginInput, RegisterInput, SchoolRegisterInput } from "./schemas";
 
 export const authKeys = {
   me: ["auth", "me"] as const,
@@ -49,8 +49,7 @@ export function useSchoolRegister() {
   const router = useRouter();
   const setSession = useAuthStore((s) => s.setSession);
   return useMutation({
-    mutationFn: (input: { name: string; email: string }) =>
-      authApi.schoolRegister(input),
+    mutationFn: (input: SchoolRegisterInput) => authApi.schoolRegister(input),
     onSuccess: ({ token, user }) => {
       setSession(token, user);
       router.push("/dashboard");

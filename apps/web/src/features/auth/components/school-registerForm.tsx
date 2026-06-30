@@ -8,7 +8,7 @@ import { useLogin, useSchoolRegister } from "../hooks";
 /**
  * School registration form — react-hook-form + zod validation, submits via the `useSchoolRegister`
  * mutation. Replace the raw inputs with shadcn/ui <Form>/<Input>/<Button>
- * once those components are generated (`npx shadcn@latest add form input button`).
+ * once those components are generated (`npx shadcn@latest   form input button`).
  */
 export function SchoolRegisterForm() {
   const schoolRegister = useSchoolRegister();
