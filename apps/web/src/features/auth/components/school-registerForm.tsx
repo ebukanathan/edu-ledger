@@ -12,7 +12,7 @@ import { useLogin, useSchoolRegister } from "../hooks";
  */
 export function SchoolRegisterForm() {
   const schoolRegister = useSchoolRegister();
-  const {
+  const { 
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
