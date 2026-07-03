@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import * as controller from './auth.controller';
+import { authenticate } from '../../shared/middleware/auth.middleware';
 
 const router = Router();
 
-// TODO: define auth routes
-// router.get('/', controller.list);
+router.post('/register', controller.register);
+router.post('/login', controller.login);
+router.get('/me', authenticate, controller.me);
+router.post('/logout', authenticate, controller.logout);
 
 export default router;
