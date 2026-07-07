@@ -2,7 +2,24 @@
   "permissions": {
     "allow": [
       "Bash(code .)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(ls node_modules/jsonwebtoken/package.json)",
+      "Bash(ls node_modules/bcryptjs/package.json)",
+      "Bash(ls node_modules/bcrypt/package.json)",
+      "Bash(ls src/generated/prisma)",
+      "Bash(ls .env)",
+      "Bash(sed 's/=$//')",
+      "Bash(npm install *)",
+      "Bash(node -e \"console.log\\(require\\('@prisma/adapter-pg/package.json'\\).version\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(echo \"EXIT $?\")",
+      "Bash(npx prisma *)",
+      "Bash(npm run *)",
+      "Bash(git check-ignore *)",
+      "Bash(BACKEND_URL=http://localhost:3001 npm run dev)"
     ]
   }
 }
