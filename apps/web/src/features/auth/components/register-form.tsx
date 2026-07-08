@@ -30,7 +30,7 @@ export function RegisterForm() {
           id="firstName"
           type="text"
           autoComplete="given-name"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("firstName")}
         />
         {errors.firstName && (
@@ -45,7 +45,7 @@ export function RegisterForm() {
           id="lastName"
           type="text"
           autoComplete="family-name"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("lastName")}
         />
         {errors.lastName && (
@@ -60,7 +60,7 @@ export function RegisterForm() {
           id="email"
           type="email"
           autoComplete="email"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("email")}
         />
         {errors.email && (
@@ -76,7 +76,7 @@ export function RegisterForm() {
           id="password"
           type="password"
           autoComplete="current-password"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("password")}
         />
         {errors.password && (
@@ -91,7 +91,7 @@ export function RegisterForm() {
           id="password"
           type="password"
           autoComplete="current-password"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("password")}
         />
         {errors.password && (
@@ -108,7 +108,7 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={isSubmitting || login.isPending}
-        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-50"
       >
         {login.isPending ? "Signing in…" : "Sign in"}
       </button>

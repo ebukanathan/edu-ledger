@@ -32,7 +32,7 @@ export function SchoolRegisterForm() {
           id="name"
           type="text"
           autoComplete="given-name"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("name")}
         />
         {errors.name && (
@@ -47,7 +47,7 @@ export function SchoolRegisterForm() {
           id="email"
           type="email"
           autoComplete="email"
-          className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           {...register("email")}
         />
         {errors.email && (
@@ -65,7 +65,7 @@ export function SchoolRegisterForm() {
       <button
         type="submit"
         disabled={isSubmitting || schoolRegister.isPending}
-        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-50"
       >
         {schoolRegister.isPending ? "Signing up…" : "Sign up"}
       </button>
