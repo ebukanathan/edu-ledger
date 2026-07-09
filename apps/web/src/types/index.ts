@@ -7,5 +7,11 @@ export type {
   UserRole,
   PaymentStatus,
   User,
+  School,
+  CreatableSchoolRole,
+  OnboardSchoolPayload,
+  OnboardSchoolResponse,
+  CreateSchoolUserPayload,
+  CreateSchoolUserResponse,
   Payment,
 } from '@eduledger/shared';

@@ -4,7 +4,12 @@
 // and API response envelopes. No runtime logic, no framework imports — so it
 // stays safe to import from both a Node backend and a browser bundle.
 
-export type UserRole = 'admin' | 'bursar' | 'staff';
+export type UserRole =
+  | 'platform_admin'
+  | 'school_admin'
+  | 'finance_officer'
+  | 'teacher'
+  | 'admissions_officer';
 
 export type PaymentStatus = 'pending' | 'recorded' | 'reconciled' | 'failed';
 
@@ -27,6 +32,43 @@ export interface User {
   email: string;
   name: string;
   role: UserRole;
+  schoolId: string | null;
+}
+
+export interface School {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  address: string | null;
+  logoUrl: string | null;
+  isActive: boolean;
+  createdAt: string;
+}
+
+/** Roles a School Admin is allowed to create for their own school. */
+export type CreatableSchoolRole = Exclude<UserRole, 'platform_admin' | 'school_admin'>;
+
+export interface OnboardSchoolPayload {
+  school: { name: string; email: string; phone?: string; address?: string; logoUrl?: string };
+  admin: { name: string; email: string };
+}
+
+export interface OnboardSchoolResponse {
+  school: School;
+  admin: Pick<User, 'id' | 'name' | 'email' | 'role'>;
+  temporaryPassword: string;
+}
+
+export interface CreateSchoolUserPayload {
+  name: string;
+  email: string;
+  role: CreatableSchoolRole;
+}
+
+export interface CreateSchoolUserResponse {
+  user: User;
+  temporaryPassword: string;
 }
 
 export interface Payment {

@@ -1,19 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import * as service from './auth.service';
-import { parseLogin, parseRegister } from './auth.validation';
+import { parseLogin } from './auth.validation';
 import { UnauthorizedError } from '../../shared/errors/app-error';
 
 // HTTP layer: parse request, call service, shape response.
 // No business logic here.
-
-export async function register(req: Request, res: Response, next: NextFunction) {
-  try {
-    const result = await service.register(parseRegister(req.body));
-    res.status(201).json(result);
-  } catch (err) {
-    next(err);
-  }
-}
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {

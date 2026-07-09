@@ -6,7 +6,7 @@ import { UnauthorizedError } from '../errors/app-error';
 // are carried so most requests can authorize without an extra DB round-trip.
 export interface TokenPayload {
   sub: string;
-  schoolId: string;
+  schoolId: string | null;
   role: string;
 }
 

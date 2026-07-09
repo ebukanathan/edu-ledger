@@ -1,15 +1,14 @@
 // Domain types for the auth module.
 import type { Role } from '../../generated/prisma/client';
+import type { PublicRole } from '../../shared/constants/roles';
 
-// Mirror of @eduledger/shared `UserRole`. Duplicated rather than imported
-// because the api tsconfig's `rootDir: src` excludes packages/*; keep the
-// string literals in sync with the shared contract.
-export type PublicRole = 'admin' | 'bursar' | 'staff';
+export type { PublicRole };
 
-/** Authenticated caller, attached to `req.principal` by the auth middleware. */
+/** Authenticated caller, attached to `req.principal` by the auth middleware.
+ * `schoolId` is null for Platform Admins, who don't belong to a school. */
 export interface Principal {
   userId: string;
-  schoolId: string;
+  schoolId: string | null;
   role: Role;
 }
 
@@ -19,20 +18,13 @@ export interface AuthUserDto {
   email: string;
   name: string;
   role: PublicRole;
+  schoolId: string | null;
 }
 
-/** Response body for successful login/registration. */
+/** Response body for successful login. */
 export interface AuthResult {
   token: string;
   user: AuthUserDto;
-}
-
-/** Sign-up creates a school together with its first ADMIN user. */
-export interface RegisterInput {
-  schoolName: string;
-  name: string;
-  email: string;
-  password: string;
 }
 
 export interface LoginInput {

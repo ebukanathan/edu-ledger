@@ -17,6 +17,10 @@ model School {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
+  phone     String?
+  address   String?
+  logoUrl   String?
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
 
   users     User[]
@@ -30,10 +34,12 @@ model User {
   password  String
   role      Role
 
-  schoolId  String
-  school    School   @relation(fields: [schoolId], references: [id])
+  schoolId  String?
+  school    School?  @relation(fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@index([schoolId])
 }
 
 model Student {
@@ -87,6 +93,9 @@ model Payment {
 }
 
 enum Role {
-  ADMIN
-  ACCOUNTANT
+  PLATFORM_ADMIN
+  SCHOOL_ADMIN
+  FINANCE_OFFICER
+  TEACHER
+  ADMISSIONS_OFFICER
 }

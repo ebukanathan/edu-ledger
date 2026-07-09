@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/jwt';
-import { UnauthorizedError } from '../errors/app-error';
+import { ForbiddenError, UnauthorizedError } from '../errors/app-error';
 import type { Role } from '../../generated/prisma/client';
 
 // Verifies the bearer token and attaches the principal to the request.
@@ -17,11 +17,23 @@ export function authenticate(req: Request, _res: Response, next: NextFunction) {
 
     req.principal = {
       userId: payload.sub,
-      schoolId: payload.schoolId,
+      schoolId: payload.schoolId ?? null,
       role: payload.role as Role,
     };
     next();
   } catch (err) {
     next(err);
   }
+}
+
+// Restricts a route to callers whose role is in the allowed set. Mount after
+// `authenticate` so `req.principal` is populated.
+export function authorize(...roles: Role[]) {
+  return function (req: Request, _res: Response, next: NextFunction) {
+    if (!req.principal) return next(new UnauthorizedError());
+    if (!roles.includes(req.principal.role)) {
+      return next(new ForbiddenError('You do not have permission to perform this action'));
+    }
+    next();
+  };
 }
