@@ -21,12 +21,6 @@ export default function HomePage() {
           >
             Sign in
           </Link>
-          <Link
-            href="/schoolRegister"
-            className="rounded-md border border-input bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-          >
-            Register your school
-          </Link>
         </div>
       </div>
     </main>

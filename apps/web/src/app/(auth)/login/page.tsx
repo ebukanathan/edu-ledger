@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { LoginForm } from '@/features/auth/components/login-form';
 
 export default function LoginPage() {
@@ -10,10 +9,8 @@ export default function LoginPage() {
       </div>
       <LoginForm />
       <p className="text-center text-sm text-muted-foreground">
-        No account?{' '}
-        <Link href="/register" className="font-medium text-primary underline">
-          Create one
-        </Link>
+        Schools are onboarded by EduLedger. Contact your platform admin for
+        access.
       </p>
     </div>
   );

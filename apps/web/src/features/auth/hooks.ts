@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/auth-store";
 import { authApi } from "./api";
-import type { LoginInput, RegisterInput, SchoolRegisterInput } from "./schemas";
+import type { LoginInput } from "./schemas";
 
 export const authKeys = {
   me: ["auth", "me"] as const,
@@ -27,32 +27,7 @@ export function useLogin() {
     mutationFn: (input: LoginInput) => authApi.login(input),
     onSuccess: ({ token, user }) => {
       setSession(token, user);
-      router.push("/dashboard");
-    },
-  });
-}
-
-export function useRegister() {
-  const router = useRouter();
-  const setSession = useAuthStore((s) => s.setSession);
-  return useMutation({
-    mutationFn: ({ confirmPassword: _ignored, ...input }: RegisterInput) =>
-      authApi.register(input),
-    onSuccess: ({ token, user }) => {
-      setSession(token, user);
-      router.push("/dashboard");
-    },
-  });
-}
-
-export function useSchoolRegister() {
-  const router = useRouter();
-  const setSession = useAuthStore((s) => s.setSession);
-  return useMutation({
-    mutationFn: (input: SchoolRegisterInput) => authApi.schoolRegister(input),
-    onSuccess: ({ token, user }) => {
-      setSession(token, user);
-      router.push("/dashboard");
+      router.push(user.role === "platform_admin" ? "/platform/schools/new" : "/dashboard");
     },
   });
 }

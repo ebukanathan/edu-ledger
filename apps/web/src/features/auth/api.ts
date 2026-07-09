@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/api-client";
-import type { LoginInput, RegisterInput, SchoolRegisterInput } from "./schemas";
+import type { LoginInput } from "./schemas";
 import type { AuthUser, LoginResponse } from "./types";
 
 // Thin transport layer for the backend's `/api/auth` routes. No React here —
@@ -8,14 +8,6 @@ import type { AuthUser, LoginResponse } from "./types";
 export const authApi = {
   login: (input: LoginInput) =>
     apiClient.post<LoginResponse>("/auth/login", input).then((r) => r.data),
-
-  register: (input: Omit<RegisterInput, "confirmPassword">) =>
-    apiClient.post<LoginResponse>("/auth/register", input).then((r) => r.data),
-
-  schoolRegister: (input: SchoolRegisterInput) =>
-    apiClient
-      .post<LoginResponse>("/auth/school-register", input)
-      .then((r) => r.data),
 
   me: () => apiClient.get<AuthUser>("/auth/me").then((r) => r.data),
 
