@@ -19,7 +19,11 @@
       "Bash(npx prisma *)",
       "Bash(npm run *)",
       "Bash(git check-ignore *)",
-      "Bash(BACKEND_URL=http://localhost:3001 npm run dev)"
+      "Bash(BACKEND_URL=http://localhost:3001 npm run dev)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3002/)",
+      "Bash(curl -s -o /dev/null -w \"login: %{http_code}\\\\n\" http://localhost:3002/login)",
+      "Bash(curl -s -o /dev/null -w \"dashboard: %{http_code}\\\\n\" http://localhost:3002/dashboard)",
+      "Bash(curl -s -o /dev/null -w \"schoolRegister: %{http_code}\\\\n\" http://localhost:3002/schoolRegister)"
     ]
   }
 }

@@ -6,5 +6,7 @@ import type { OnboardSchoolInput } from "./schemas";
 // onboarding schools).
 export const platformApi = {
   onboardSchool: (input: OnboardSchoolInput) =>
-    apiClient.post<OnboardSchoolResponse>("/platform/schools", input).then((r) => r.data),
+    apiClient
+      .post<OnboardSchoolResponse>("/platform/schools", input)
+      .then((r) => r.data),
 };
