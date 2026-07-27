@@ -26,7 +26,13 @@
       "Bash(curl -s -o /dev/null -w \"schoolRegister: %{http_code}\\\\n\" http://localhost:3002/schoolRegister)",
       "Bash(echo \"web pid: $!\")",
       "Bash(curl -s http://localhost:5000/health)",
-      "Bash(curl -s http://localhost:3000 -o /dev/null -w \"web status: %{http_code}\\\\n\")"
+      "Bash(curl -s http://localhost:3000 -o /dev/null -w \"web status: %{http_code}\\\\n\")",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3002/)",
+      "Bash(curl -s -o /dev/null -w \"schools/new: %{http_code}\\\\n\" http://localhost:3002/platform/schools/new)",
+      "Bash(curl -s -X POST http://localhost:3002/api/platform/schools -H 'Content-Type: application/json' -d '{\"school\":{\"name\":\"Riverside High\",\"email\":\"contact@riverside.edu\"},\"admin\":{\"name\":\"Jane Doe\",\"email\":\"admin@riverside.edu\"}}')",
+      "Bash(curl -s \"http://localhost:3002/login?email=admin%40riverside.edu&tempPassword=tbJrfaD1-L5_CBDk\")",
+      "Bash(curl -s -X POST http://localhost:3002/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"admin@riverside.edu\",\"password\":\"tbJrfaD1-L5_CBDk\"}')",
+      "Bash(taskkill //F //IM node.exe //T)"
     ]
   }
 }
