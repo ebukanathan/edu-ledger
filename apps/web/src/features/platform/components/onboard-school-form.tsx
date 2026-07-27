@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { onboardSchoolSchema, type OnboardSchoolInput } from "../schemas";
@@ -7,22 +8,31 @@ import { useOnboardSchool } from "../hooks";
 
 /**
  * Onboards a new school: creates the School and its first School Admin in
- * one step. There is no email delivery yet, so on success we surface the
- * generated temporary password directly so it can be relayed to the admin.
+ * one step. There is no email delivery yet, so on success we hand the
+ * generated temporary password off to /login via query params rather than
+ * relaying it by email.
  */
 export function OnboardSchoolForm() {
+  const router = useRouter();
   const onboardSchool = useOnboardSchool();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<OnboardSchoolInput>({
     resolver: zodResolver(onboardSchoolSchema),
   });
 
   const onSubmit = handleSubmit((values) =>
-    onboardSchool.mutate(values, { onSuccess: () => reset() }),
+    onboardSchool.mutate(values, {
+      onSuccess: (data) => {
+        const params = new URLSearchParams({
+          email: data.admin.email,
+          tempPassword: data.temporaryPassword,
+        });
+        router.push(`/login?${params.toString()}`);
+      },
+    }),
   );
 
   return (
@@ -124,20 +134,6 @@ export function OnboardSchoolForm() {
           {(onboardSchool.error as { message?: string })?.message ??
             "Could not onboard school"}
         </p>
-      )}
-
-      {onboardSchool.isSuccess && (
-        <div className="rounded-md border border-primary/30 bg-primary/5 p-3 text-sm">
-          <p className="font-medium">
-            {onboardSchool.data.school.name} was onboarded.
-          </p>
-          <p className="text-muted-foreground">
-            Share this temporary password with {onboardSchool.data.admin.email}:{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 font-mono">
-              {onboardSchool.data.temporaryPassword}
-            </code>
-          </p>
-        </div>
       )}
 
       <button

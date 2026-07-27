@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "../schemas";
@@ -9,19 +10,39 @@ import { useLogin } from "../hooks";
  * Login form — react-hook-form + zod validation, submits via the `useLogin`
  * mutation. Replace the raw inputs with shadcn/ui <Form>/<Input>/<Button>
  * once those components are generated (`npx shadcn@latest add form input button`).
+ *
+ * Also doubles as the landing spot after school self-registration: that flow
+ * hands the freshly created admin's email + temporary password over as query
+ * params (no email delivery yet), which we use to prefill the fields below.
  */
 export function LoginForm() {
   const login = useLogin();
+  const searchParams = useSearchParams();
+  const prefillEmail = searchParams.get("email") ?? "";
+  const prefillPassword = searchParams.get("tempPassword") ?? "";
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: prefillEmail, password: prefillPassword },
+  });
 
   const onSubmit = handleSubmit((values) => login.mutate(values));
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      {prefillPassword && (
+        <div className="rounded-md border border-primary/30 bg-primary/5 p-3 text-sm">
+          <p className="font-medium">School registered.</p>
+          <p className="text-muted-foreground">
+            We've filled in the temporary password for {prefillEmail} — sign
+            in below.
+          </p>
+        </div>
+      )}
+
       <div className="flex flex-col gap-1">
         <label htmlFor="email" className="text-sm font-medium">
           Email

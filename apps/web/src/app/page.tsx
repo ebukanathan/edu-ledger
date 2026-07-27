@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -20,6 +20,14 @@ export default function HomePage() {
             className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
           >
             Sign in
+          </Link>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/platform/schools/new"
+            className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+          >
+            Register School
           </Link>
         </div>
       </div>

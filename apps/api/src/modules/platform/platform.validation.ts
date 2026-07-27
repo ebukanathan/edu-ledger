@@ -1,12 +1,12 @@
 // Request/input validation for the platform module. Hand-rolled (no zod on
 // the backend), matching the style of auth.validation.ts.
-import { ValidationError } from '../../shared/errors/app-error';
-import type { OnboardSchoolInput } from './platform.types';
+import { ValidationError } from "../../shared/errors/app-error";
+import type { OnboardSchoolInput } from "./platform.types";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function asString(value: unknown): string {
-  return typeof value === 'string' ? value.trim() : '';
+  return typeof value === "string" ? value.trim() : "";
 }
 
 function asOptionalString(value: unknown): string | undefined {
@@ -24,12 +24,17 @@ export function parseOnboardSchool(body: unknown): OnboardSchoolInput {
   const adminName = asString(adminBody.name);
   const adminEmail = asString(adminBody.email).toLowerCase();
 
-  if (schoolName.length < 2) throw new ValidationError('School name is required');
-  if (!EMAIL_RE.test(schoolEmail)) throw new ValidationError('Enter a valid school email');
-  if (adminName.length < 2) throw new ValidationError('School admin name is required');
-  if (!EMAIL_RE.test(adminEmail)) throw new ValidationError('Enter a valid school admin email');
+  if (schoolName.length < 2)
+    throw new ValidationError("School name is required");
+  if (!EMAIL_RE.test(schoolEmail))
+    throw new ValidationError("Enter a valid school email");
+  // if (adminName.length < 2) throw new ValidationError('School admin name is required');
+  if (!EMAIL_RE.test(adminEmail))
+    throw new ValidationError("Enter a valid school admin email");
   if (adminEmail === schoolEmail) {
-    throw new ValidationError('School admin email must differ from the school email');
+    throw new ValidationError(
+      "School admin email must differ from the school email",
+    );
   }
 
   return {

@@ -23,7 +23,10 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3002/)",
       "Bash(curl -s -o /dev/null -w \"login: %{http_code}\\\\n\" http://localhost:3002/login)",
       "Bash(curl -s -o /dev/null -w \"dashboard: %{http_code}\\\\n\" http://localhost:3002/dashboard)",
-      "Bash(curl -s -o /dev/null -w \"schoolRegister: %{http_code}\\\\n\" http://localhost:3002/schoolRegister)"
+      "Bash(curl -s -o /dev/null -w \"schoolRegister: %{http_code}\\\\n\" http://localhost:3002/schoolRegister)",
+      "Bash(echo \"web pid: $!\")",
+      "Bash(curl -s http://localhost:5000/health)",
+      "Bash(curl -s http://localhost:3000 -o /dev/null -w \"web status: %{http_code}\\\\n\")"
     ]
   }
 }
