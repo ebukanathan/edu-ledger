@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/api-client";
-import type { LoginInput } from "./schemas";
+import type { ChangePasswordInput, LoginInput } from "./schemas";
 import type { AuthUser, LoginResponse } from "./types";
 
 // Thin transport layer for the backend's `/api/auth` routes. No React here —
@@ -12,4 +12,9 @@ export const authApi = {
   me: () => apiClient.get<AuthUser>("/auth/me").then((r) => r.data),
 
   logout: () => apiClient.post("/auth/logout").then((r) => r.data),
+
+  changePassword: (input: Omit<ChangePasswordInput, "confirmPassword">) =>
+    apiClient
+      .post<{ success: true }>("/auth/change-password", input)
+      .then((r) => r.data),
 };

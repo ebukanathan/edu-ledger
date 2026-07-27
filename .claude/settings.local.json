@@ -32,7 +32,23 @@
       "Bash(curl -s -X POST http://localhost:3002/api/platform/schools -H 'Content-Type: application/json' -d '{\"school\":{\"name\":\"Riverside High\",\"email\":\"contact@riverside.edu\"},\"admin\":{\"name\":\"Jane Doe\",\"email\":\"admin@riverside.edu\"}}')",
       "Bash(curl -s \"http://localhost:3002/login?email=admin%40riverside.edu&tempPassword=tbJrfaD1-L5_CBDk\")",
       "Bash(curl -s -X POST http://localhost:3002/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"admin@riverside.edu\",\"password\":\"tbJrfaD1-L5_CBDk\"}')",
-      "Bash(taskkill //F //IM node.exe //T)"
+      "Bash(taskkill //F //IM node.exe //T)",
+      "Bash(command -v chromium-cli)",
+      "Bash(lsof -ti:5000 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)",
+      "Bash(lsof -ti:3000 -sTCP:LISTEN)",
+      "Bash(lsof -ti:3001 -sTCP:LISTEN)",
+      "Bash(lsof -ti:3002 -sTCP:LISTEN)",
+      "Bash(curl -sf http://localhost:5000/health)",
+      "Bash(break)",
+      "Bash(curl -sf http://localhost:3000/)",
+      "Read(//tmp/**)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://localhost:3000/platform/schools/new)",
+      "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://localhost:3000/login)",
+      "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://localhost:3000/settings)",
+      "Bash(node -e ' *)",
+      "Bash(node *)"
     ]
   }
 }

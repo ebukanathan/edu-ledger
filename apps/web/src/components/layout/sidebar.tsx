@@ -8,6 +8,7 @@ import {
   Scale,
   Users,
   GraduationCap,
+  Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ const NAV = [
   { href: "/payments", label: "Payments", icon: CreditCard },
   { href: "/reconciliation", label: "Reconciliation", icon: Scale },
   { href: "/users", label: "Users", icon: Users },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function Sidebar() {

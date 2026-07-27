@@ -5,9 +5,11 @@ import bcrypt from 'bcryptjs';
 import * as repository from './auth.repository';
 import { signToken } from '../../shared/utils/jwt';
 import { toPublicRole } from '../../shared/constants/roles';
-import { UnauthorizedError } from '../../shared/errors/app-error';
-import type { AuthResult, AuthUserDto, LoginInput } from './auth.types';
+import { UnauthorizedError, ValidationError } from '../../shared/errors/app-error';
+import type { AuthResult, AuthUserDto, ChangePasswordInput, LoginInput } from './auth.types';
 import type { Role } from '../../generated/prisma/client';
+
+const SALT_ROUNDS = 10;
 
 interface DbUser {
   id: string;
@@ -50,4 +52,17 @@ export async function getUserById(id: string): Promise<AuthUserDto> {
   const user = await repository.findUserById(id);
   if (!user) throw new UnauthorizedError('Account no longer exists');
   return toDto(user);
+}
+
+export async function changePassword(userId: string, input: ChangePasswordInput): Promise<void> {
+  const user = await repository.findUserById(userId);
+  if (!user) throw new UnauthorizedError('Account no longer exists');
+
+  const ok = await bcrypt.compare(input.currentPassword, user.password);
+  // Wrong current password is a validation failure, not an auth failure —
+  // the caller is already authenticated via their bearer token.
+  if (!ok) throw new ValidationError('Current password is incorrect');
+
+  const passwordHash = await bcrypt.hash(input.newPassword, SALT_ROUNDS);
+  await repository.updatePassword(userId, passwordHash);
 }

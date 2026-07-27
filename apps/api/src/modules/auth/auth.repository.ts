@@ -9,3 +9,7 @@ export function findUserByEmail(email: string) {
 export function findUserById(id: string) {
   return prisma.user.findUnique({ where: { id } });
 }
+
+export function updatePassword(userId: string, passwordHash: string) {
+  return prisma.user.update({ where: { id: userId }, data: { password: passwordHash } });
+}

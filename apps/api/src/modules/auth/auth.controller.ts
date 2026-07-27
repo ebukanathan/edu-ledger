@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as service from './auth.service';
-import { parseLogin } from './auth.validation';
+import { parseChangePassword, parseLogin } from './auth.validation';
 import { UnauthorizedError } from '../../shared/errors/app-error';
 
 // HTTP layer: parse request, call service, shape response.
@@ -27,4 +27,14 @@ export async function me(req: Request, res: Response, next: NextFunction) {
 export function logout(_req: Request, res: Response) {
   // Stateless JWT: nothing to invalidate server-side; the client drops the token.
   res.json({ success: true });
+}
+
+export async function changePassword(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.principal) throw new UnauthorizedError();
+    await service.changePassword(req.principal.userId, parseChangePassword(req.body));
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
 }

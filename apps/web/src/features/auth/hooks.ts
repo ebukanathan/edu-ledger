@@ -32,6 +32,12 @@ export function useLogin() {
   });
 }
 
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: authApi.changePassword,
+  });
+}
+
 export function useLogout() {
   const router = useRouter();
   const clear = useAuthStore((s) => s.clear);
