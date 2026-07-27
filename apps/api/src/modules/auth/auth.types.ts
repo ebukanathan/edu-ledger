@@ -19,6 +19,7 @@ export interface AuthUserDto {
   name: string;
   role: PublicRole;
   schoolId: string | null;
+  schoolName: string | null;
 }
 
 /** Response body for successful login. */

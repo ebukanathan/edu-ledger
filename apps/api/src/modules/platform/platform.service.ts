@@ -36,6 +36,11 @@ function toSchoolDto(school: {
   };
 }
 
+export async function getSchoolById(id: string): Promise<SchoolDto | null> {
+  const school = await repository.findSchoolById(id);
+  return school ? toSchoolDto(school) : null;
+}
+
 export async function onboardSchool(
   input: OnboardSchoolInput,
 ): Promise<OnboardSchoolResult> {

@@ -6,6 +6,7 @@ export interface AuthUser {
   name: string;
   role: UserRole;
   schoolId: string | null;
+  schoolName: string | null;
 }
 
 export interface LoginResponse {

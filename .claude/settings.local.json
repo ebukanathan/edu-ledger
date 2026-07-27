@@ -48,7 +48,8 @@
       "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://localhost:3000/login)",
       "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://localhost:3000/settings)",
       "Bash(node -e ' *)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(curl -s -o /dev/null -w \"web: %{http_code}\\\\n\" http://localhost:3000/)"
     ]
   }
 }

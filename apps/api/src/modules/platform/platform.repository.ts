@@ -8,6 +8,10 @@ export function findSchoolByEmail(email: string) {
   return prisma.school.findUnique({ where: { email } });
 }
 
+export function findSchoolById(id: string) {
+  return prisma.school.findUnique({ where: { id } });
+}
+
 export function findUserByEmail(email: string) {
   return prisma.user.findUnique({ where: { email } });
 }

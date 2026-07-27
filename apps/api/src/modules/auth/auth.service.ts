@@ -6,6 +6,7 @@ import * as repository from './auth.repository';
 import { signToken } from '../../shared/utils/jwt';
 import { toPublicRole } from '../../shared/constants/roles';
 import { UnauthorizedError, ValidationError } from '../../shared/errors/app-error';
+import { getSchoolById } from '../platform';
 import type { AuthResult, AuthUserDto, ChangePasswordInput, LoginInput } from './auth.types';
 import type { Role } from '../../generated/prisma/client';
 
@@ -19,23 +20,25 @@ interface DbUser {
   schoolId: string | null;
 }
 
-function toDto(user: DbUser): AuthUserDto {
+async function toDto(user: DbUser): Promise<AuthUserDto> {
+  const school = user.schoolId ? await getSchoolById(user.schoolId) : null;
   return {
     id: user.id,
     email: user.email,
     name: user.name,
     role: toPublicRole(user.role),
     schoolId: user.schoolId,
+    schoolName: school?.name ?? null,
   };
 }
 
-function issue(user: DbUser): AuthResult {
+async function issue(user: DbUser): Promise<AuthResult> {
   const token = signToken({
     sub: user.id,
     schoolId: user.schoolId,
     role: user.role,
   });
-  return { token, user: toDto(user) };
+  return { token, user: await toDto(user) };
 }
 
 export async function login(input: LoginInput): Promise<AuthResult> {
